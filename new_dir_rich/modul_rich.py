@@ -44,10 +44,12 @@ def menu():
 
 
 menu()
+'''Список с продуктами'''
 product_dict = {'кофе': [1000, 2000], 'чай': [2000]}
 
 
 def add_product():
+    '''Добавляем продукт в корзину'''
     global product_dict
     product = input('Что хотите добавить в корзину? ')
     price = int(input('Уточните цену товара? '))
@@ -56,11 +58,13 @@ def add_product():
 
 
 def empty_cart():
+    '''Очищаем корзину с продуктами'''
     global product_dict
     product_dict = {}
 
 
 def cart():
+    '''Корзина с продуктами'''
     table = Table()
     table.add_column("Дата покупки", justify="center", style="cyan", no_wrap=True)
     table.add_column("Наименования продукта", style="magenta")
@@ -78,6 +82,7 @@ def cart():
 
 
 def check():
+    '''Вывод чека'''
     def do_work():
         for i in range(1):
             print('')
