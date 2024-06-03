@@ -64,7 +64,11 @@ class UrTube:
     def log_in(self, username, password, age=None):
         if self.data.get(username, False) and self.data[username][0] == hash(password):
             print(f'Добро пожаловать {username}')
+            if age is None:
+                age = self.data[username][1]
+                
             self.current_user = [username, age]
+            print(self.current_user)
             return self.current_user
         elif self.data.get(username, False) and self.data[username][0] != hash(password):
             print('Пароль не верный')
@@ -84,6 +88,7 @@ class UrTube:
         for video in videos:
             if not any(v.title == video.title for v in self.videos):
                 self.videos.append(video)
+                print(f'{video.title}')
             else:
                 print(f'{video.title} Такое видео уже существует')
 
@@ -97,6 +102,7 @@ class UrTube:
         if self.get_video(name_video):
             if not self.current_user:
                 print('Войдите в аккаунт чтобы смотреть видео')
+                print(self.current_user[1])
             elif self.current_user[1] > 18:
                 var = self.get_video(name_video).get(name_video)
                 for i in range(1, var + 1):
@@ -149,8 +155,8 @@ if __name__ == '__main__':
             v1 = Video('Лучший язык программирования 2024 года', 200)
             v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
             database.add_video(v1, v2)
-            for i in database.videos:
-                print(i)
+            # for i in database.videos:
+            #     print(i)
         elif choice == 5:
             if not database.videos:
                 print('В UrTube нет загруженных видео')
