@@ -35,7 +35,8 @@
 # После воспроизведения нужно выводить: "Конец видео"
 
 from time import sleep
-
+import os
+import ast
 
 class UrTube:
     def __init__(self):
@@ -46,31 +47,39 @@ class UrTube:
     def __str__(self):
         return f'{self.videos}'
 
-
+    def write_db(self):
+        for key, value in self.data.items():
+            self.data[key] = value
+        print(self.data)
+        return self.data
 
     def register(self, username, password, age):
+        print(self.current_user)
+        # print('Требуется разлогинится')
         if not self.data.get(username, False):
             self.data[username] = []
-            self.data[username].append(hash(password))
+            self.data[username].append((password))
             self.data[username].append(age)
             self.log_in(username, password, age)
-
+            if username in list(self.data.keys()):
+                add_file(database.data)
             return [username, password, age]
         else:
             print(f'Пользователь {username} уже существует')
-            self.current_user = True
+            self.current_user = [username, age]
             return [username, password, self.data[username][1]]
 
     def log_in(self, username, password, age=None):
-        if self.data.get(username, False) and self.data[username][0] == hash(password):
+        print(f'это в login начало {self.current_user}')
+        if self.data.get(username, False) and self.data[username][0] == (password):
             print(f'Добро пожаловать {username}')
             if age is None:
                 age = self.data[username][1]
-                
+
             self.current_user = [username, age]
-            print(self.current_user)
+            print(f'это в login конец {self.current_user}')
             return self.current_user
-        elif self.data.get(username, False) and self.data[username][0] != hash(password):
+        elif self.data.get(username, False) and self.data[username][0] != (password):
             print('Пароль не верный')
         else:
             print('Такого логина нет, требуется регистрация')
@@ -98,6 +107,7 @@ class UrTube:
             if name.lower() in self.videos[i].title.lower():
                 get_[self.videos[i].title] = self.videos[i].duration
         return get_
+
     def watch_video(self, name_video):
         if self.get_video(name_video):
             if not self.current_user:
@@ -138,9 +148,36 @@ class User:
 
 if __name__ == '__main__':
     database = UrTube()
+
+    def add_file(dict_):
+        with open('db.txt', 'a+') as file:
+            for key, value in dict_.items():
+                file.write(f'{key}{value}\n')
+
+    def create_file():
+        file_path = 'db.txt'
+        if os.path.exists(file_path):
+            with open('db.txt', 'r') as file:
+                file = file.readlines()
+                dict_  = {}
+                for string_dict in file:
+                    index = string_dict.find('[')
+                    if string_dict != '':
+                        list_from_string = ast.literal_eval(string_dict[index:])
+                        dict_[string_dict[:index]] = list_from_string
+                database.data = dict_
+
+
+        else:
+            with open(file_path, 'w') as file:
+                pass
+            print('Файл создан')
+
+
+    create_file()
     while True:
         choice = int(input("Приветствую! Выберите действие: \n1 - Вход\n2 - Регистрация\n3 - Выход\n4 - Добавить "
-                           "видео\n5 - Поиск видео\n6 - Смотреть видео\n7 - Выход\n"))
+                           "видео\n5 - Поиск видео\n6 - Смотреть видео\n7 - Посмотреть базу\n8 - Выход\n"))
         print('*' * 10)
         if choice == 1:
             user = User(input('Введите логин: '), password := input('Введите пароль: '))
@@ -149,8 +186,10 @@ if __name__ == '__main__':
             user = User(input('Введите логин: '), password := input('Введите пароль: '),
                         age := int(input('Введите возрост: ')))
             database.register(user.nickname, user.password, age)
+
         elif choice == 3:
             UrTube.log_out(database)
+
         elif choice == 4:
             v1 = Video('Лучший язык программирования 2024 года', 200)
             v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
@@ -172,6 +211,8 @@ if __name__ == '__main__':
                 database.watch_video('Для чего девушкам парень программист?')
             # database.watch_video('аацпймуиа')
         elif choice == 7:
+            database.write_db()
+        elif choice == 8:
             break
 
         print('*' * 10)
