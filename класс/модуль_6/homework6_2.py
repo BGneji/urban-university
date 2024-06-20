@@ -36,9 +36,6 @@ class Sedan(Vehicle):
         super().__init__(owner, model, engine_power, color)
         self.limit = self.sedan_passengers(limit)
 
-    def print_info(self):
-        return f'{self.get_model()}\n{self.get_horsepower()}\n{self.get_color()}\nВладелец: {self.owner}\n{self.limit}'
-
     def sedan_passengers(self, limit):
         if Sedan.__PASSENGERS_LIMIT != limit:
             return f'В седане только 5 мест'
@@ -47,10 +44,11 @@ class Sedan(Vehicle):
             return self.limit
 
 
-vehicle1 = Sedan('Fedos', 'Toyota Mark II', 500, 'blue', 2)
+vehicle1 = Sedan('Fedos', 'Toyota Mark II', 500, 'blue', 4)
 print(vehicle1.print_info())
 vehicle1.set_color('Pink')
 vehicle1.set_color('BLACK')
 vehicle1.owner = 'Vasyok'
 print(vehicle1.print_info())
+print('*' * 20)
 print(vehicle1.limit)
