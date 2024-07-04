@@ -24,6 +24,7 @@
 # print(f'Результат 3: {calculate_average(567)}') # Передана не коллекция
 # print(f'Результат 4: {calculate_average([42, 15, 36, 13])}') # Всё должно работать
 
+
 def personal_sum(numbers):
     incorrect_data = 0
     result = 0
