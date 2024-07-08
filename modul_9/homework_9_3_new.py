@@ -28,4 +28,3 @@ print(first_result)
 
 second_result = [len(first[i]) == len(second[i]) for i in range(len(first))]
 print(second_result)
-
