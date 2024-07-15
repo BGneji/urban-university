@@ -1,7 +1,6 @@
 from time import sleep
 from datetime import datetime
-from threading import Thread
-
+from threading import Thread, Lock
 
 # Цель: научиться создавать классы наследованные от класса Thread.
 #
@@ -20,7 +19,7 @@ from threading import Thread
 # Создайте класс Knight с соответствующими описанию свойствами.
 # Создайте и запустите 2 потока на основе класса Knight.
 # Выведите на экран строку об окончании битв.
-
+lock = Lock()
 
 class Knight(Thread):
 
@@ -34,9 +33,9 @@ class Knight(Thread):
         day = 0
         print(f'{self.name}, на нас напали!')
         while self.enemies > 0:
+            day += 1
             self.enemies -= self.power
             sleep(1)
-            day += 1
             print(f'{self.name}, сражается {day} день(дня)..., осталось {self.enemies} воинов.')
         print(f"{self.name} одержал победу спустя {day} дней(дня)!")
 
