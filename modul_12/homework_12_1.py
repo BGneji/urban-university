@@ -18,26 +18,25 @@ class Runner:
 
 
 class RunnerTest(TestCase):
+    def setUp(self):
+        self.misha = Runner('Миша')
+        self.sasha = Runner('Саша')
+
     def test_walk(self):
-        new_obj = Runner('Миша')
         for i in range(10):
-            new_obj.walk()
-        self.assertEqual(new_obj.distance, 50)
+            self.misha.walk()
+        self.assertEqual(self.misha.distance, 50)
 
     def test_run(self):
-        new_obj = Runner('Саша')
         for i in range(10):
-            new_obj.run()
-        self.assertEqual(new_obj.distance, 100)
+            self.sasha.run()
+        self.assertEqual(self.sasha.distance, 100)
 
     def test_challenge(self):
-        new_obj_one = Runner('Миша')
-        new_obj_two = Runner('Саша')
         for i in range(10):
-            new_obj_one.run()
-            new_obj_two.walk()
-
-        self.assertNotEqual(new_obj_one.distance, new_obj_two.distance)
+            self.misha.run()
+            self.sasha.walk()
+        self.assertNotEqual(self.misha.distance, self.sasha.distance)
 
 
 if __name__ == '__main__':
