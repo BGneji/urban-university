@@ -32,7 +32,6 @@ class RunnerTest(TestCase):
 
 class TournamentTest(TestCase):
     is_frozen = True
-
     @classmethod
     def setUpClass(cls):
         cls.all_results = {}
@@ -74,6 +73,7 @@ class TournamentTest(TestCase):
 TextTestRunner = unittest.TestSuite()
 TextTestRunner.addTest(unittest.TestLoader().loadTestsFromTestCase(RunnerTest))
 TextTestRunner.addTest(unittest.TestLoader().loadTestsFromTestCase(TournamentTest))
+
 
 runner = unittest.TextTestRunner(verbosity=2)
 runner.run(TextTestRunner)
