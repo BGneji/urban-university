@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase
-from homework_12_1 import Runner
-from homework_12_2 import Tournament
-import homework_12_2
+from homework_12_3 import Runner, Tournament
+
+
 
 
 class RunnerTest(TestCase):
@@ -38,9 +38,9 @@ class TournamentTest(TestCase):
 
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def setUp(self):
-        self.usain = homework_12_2.Runner("Усэйн", 10)
-        self.andrey = homework_12_2.Runner("Андрей", speed=9)
-        self.nik = homework_12_2.Runner("Ник", speed=3)
+        self.usain = Runner("Усэйн", 10)
+        self.andrey = Runner("Андрей", speed=9)
+        self.nik = Runner("Ник", speed=3)
 
     # @classmethod
     # def tearDownClass(cls):
