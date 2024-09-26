@@ -14,10 +14,6 @@ class User(BaseModel):
     age: int
 
 
-
-
-
-
 # get запрос по маршруту '/users' теперь возвращает список users.
 @app.get("/users")
 async def get_all_messages() -> List[User]:
@@ -47,11 +43,12 @@ async def name_age_page(username: str, age: int) -> str:
 # В случае отсутствия пользователя выбрасывается исключение
 # HTTPException с описанием "User was not found" и кодом 404.
 @app.put("/user/{user_id}/{username}/{age}")
-async def update_message(new_id: int, username: str, age: int) -> str:
+# async def update_message(new_id: int, username: str, age: int) -> str:
+async def update_message(user: User) -> str:
     try:
-        result = [item for item in User_db if item.id == new_id]
-        result[0].username = username
-        result[0].age = age
+        result = [item for item in User_db if item.id == user.id]
+        result[0].username = user.username
+        result[0].age = user.age
         return 'User update'
     except IndexError:
         raise HTTPException(status_code=404, detail='User not found')
@@ -60,11 +57,10 @@ async def update_message(new_id: int, username: str, age: int) -> str:
 @app.delete('/user/{user_id}')
 async def delete_message(user_id: int) -> str:
     try:
-        for item in User_db:
-            if item.id == 2:
-                User_db.remove(item)
+        for user in User_db:
+            if user.id == 2:
+                User_db.remove(user)
                 break
-        print(User_db)
         return f"User {user_id} has been deleted"
     except IndexError:
         raise HTTPException(status_code=404, detail='User not found')
